@@ -1,0 +1,14 @@
+.vscode
+airflow/config
+airflow/logs
+airflow/new
+airflow/plugins
+.env
+*/.env
+airflow/dags/.env
+airflow/dags/credentials.json
+*/__pycache__
+*/*/__pycache__
+terraform_exe/*.lock.hcl
+terraform_exe/.terraform
+.terraform

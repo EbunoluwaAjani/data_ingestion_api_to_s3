@@ -1,0 +1,12 @@
+# Brief schema reference
+
+# users ={
+#   username = string
+#   roles    = (fullaccess | writeaccess)
+# }[]
+
+users:
+- username: airflow_local_user
+  roles: [writeaccess]
+- username: developer_user
+  roles: [fullaccess]

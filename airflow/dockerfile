@@ -1,0 +1,11 @@
+FROM apache/airflow:2.8.0
+
+# Set the working directory
+WORKDIR /opt/airflow
+
+# Copy requirements.txt into the container
+COPY requirements.txt .
+
+# Upgrade pip and install dependencies
+RUN pip install --upgrade --no-cache-dir pip && \
+    pip install --no-cache-dir -r requirements.txt
