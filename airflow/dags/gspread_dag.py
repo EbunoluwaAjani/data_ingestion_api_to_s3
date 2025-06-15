@@ -3,7 +3,7 @@ from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from data_02 import processed_file
 
-# Define Airflow DAG
+
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -18,10 +18,10 @@ dag = DAG(
     schedule_interval='@daily',
 )
 
-# Define task that calls the module function
+
 task = PythonOperator(
     task_id='run_gspread_script',
-    python_callable=processed_file,  # Call imported function
+    python_callable=processed_file,  
     dag=dag,
 )
 

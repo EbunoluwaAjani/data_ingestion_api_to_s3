@@ -19,19 +19,19 @@ resource "aws_s3_bucket" "google-sheet" {
   })
 }
 
-
+# Create IAM users based on a list from a YAML file
 resource "aws_iam_user" "users" {
   for_each = toset(local.users_from_yaml[*].username)
   name     = each.value
 }
 
-
+# Generate access keys for each IAM user
 resource "aws_iam_access_key" "user_keys" {
   for_each = aws_iam_user.users
-
   user = each.value.name
 }
 
+# Define a custom IAM policy for write access to S3 and SSM
 resource "aws_iam_policy" "custom_writeaccess" {
   name        = "AirflowWriteAccess"
   description = "Allows write operations for Airflow"
@@ -48,15 +48,17 @@ resource "aws_iam_policy" "custom_writeaccess" {
   })
 }
 
+# Attach IAM policies to users based on roles defined in YAML
 resource "aws_iam_user_policy_attachment" "user_roles" {
   for_each = {
-    for user in local.users_from_yaml : user.username => user.roles[0] # assumes one role
+    for user in local.users_from_yaml : user.username => user.roles[0]
   }
 
   user       = aws_iam_user.users[each.key].name
   policy_arn = lookup(local.role_policy_map, each.value)
 }
 
+# Store IAM user access keys securely in AWS SSM Parameter Store
 resource "aws_ssm_parameter" "user_keys" {
   for_each = aws_iam_access_key.user_keys
 
@@ -67,5 +69,3 @@ resource "aws_ssm_parameter" "user_keys" {
     secret_access_key = each.value.secret
   })
 }
-
-
