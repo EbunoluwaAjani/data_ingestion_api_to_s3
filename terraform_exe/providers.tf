@@ -15,6 +15,7 @@ terraform {
   backend "s3" {
     bucket = "statefilebucket-terraform-exercise"
     key    = "state.tfstate"
+   
     region = "eu-central-1"
   }
 

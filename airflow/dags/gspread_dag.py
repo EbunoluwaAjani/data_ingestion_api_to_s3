@@ -3,6 +3,10 @@ from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from data_02 import processed_file
 
+# Retrieve AWS credentials from Airflow Variables
+aws_access_key = Variable.get("aws_access_key")
+aws_secret_key = Variable.get("aws_secret_key")
+
 
 default_args = {
     'owner': 'airflow',
